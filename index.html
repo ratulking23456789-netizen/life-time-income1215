@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Online BD — Earn from Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f6fbff;
+    --card: #ffffff;
+    --accent: #0ea5ff;
+    --accent-2: #7c3aed;
+    --muted: #6b7280;
+    --success: #10b981;
+    --danger: #ef4444;
+    --radius: 14px;
+    --maxw: 980px;
+  }
+  *{box-sizing:border-box}
+  body{font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#f0f7ff 0%,var(--bg) 100%);margin:0;color:#0f1724}
+  .wrap{max-width:var(--maxw);margin:28px auto;padding:18px}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:20px}
+  h1{margin:0;font-size:20px}
+  p.lead{margin:2px 0 0;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:0 8px 30px rgba(12,18,36,0.06)}
+  .hero h2{margin:0 0 8px}
+  .btn{display:inline-flex;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+  .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+  .btn-ghost{background:transparent;border:1px solid #eef2ff;color:var(--muted)}
+  .small{font-size:13px;color:var(--muted)}
+  .balance{font-size:28px;font-weight:700;color:var(--success);margin-top:8px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .deposit-list{max-height:220px;overflow:auto;margin-top:8px}
+  .deposit-item{padding:10px;border-radius:10px;border:1px solid #f0f5ff;background:#fbfdff;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+  .muted{color:var(--muted)}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .nav button{padding:8px 10px;border-radius:8px;border:1px solid transparent;background:#f8fafc;cursor:pointer}
+  .nav .active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+  .form-group{margin-bottom:10px}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input,select,textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef9;background:#fff}
+  footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+
+  /* modal */
+  .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,6,6,0.4);z-index:999}
+  .modal.show{display:flex}
+  .modal-card{width:100%;max-width:520px;background:var(--card);padding:18px;border-radius:12px}
+  .row{display:flex;gap:8px;align-items:center}
+  .chip{padding:6px 10px;border-radius:999px;background:#f0f9ff;border:1px solid #e6f0ff;font-weight:600}
+  .success{color:var(--success);font-weight:700}
+  .claim-btn{background:linear-gradient(90deg,#22c55e,#06b6d4);color:#fff;padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700;width:100%}
+  .danger{color:var(--danger);font-weight:700}
+  .center{display:flex;justify-content:center;align-items:center;gap:8px}
+  .note{font-size:13px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">OBD</div>
+      <div>
+        <h1>Online BD — বিশ্বস্ত অনলাইন আয়ের প্ল্যাটফর্ম</h1>
+        <p class="lead">ঘরে বসে বিভিন্ন সহজ কাজ করে উপার্জন করুন — রেফার, ভিডিও দেখুন, টাইপিং ও অ্যাকাউন্ট তৈরি করে উপার্জন।</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <section class="card hero" id="welcome-section">
+          <h2>শুরু করুন এবং আয় বাড়ান</h2>
+          <p class="small">আমাদের লক্ষ্য: তরুণ প্রজন্মকে অনলাইন জগতে দক্ষ করে তোলা ও আর্থিকভাবে স্বাবলম্বী করা।</p>
+
+          <div class="nav" id="top-nav">
+            <button class="active" data-page="dashboard">ড্যাশবোর্ড</button>
+            <button data-page="earn">এর্নিং</button>
+            <button data-page="deposit">ডিপোজিট</button>
+            <button data-page="profile">প্রোফাইল</button>
+          </div>
+
+          <div id="pages" style="margin-top:12px">
+            <!-- Dashboard -->
+            <div class="page" id="dashboard">
+              <div class="grid-2">
+                <div class="card">
+                  <div class="small">বর্তমান ব্যালেন্স</div>
+                  <div class="balance" id="current-balance">BDT 0.00</div>
+                  <div class="note">ক্লেইম করে টাকা যোগ হবে।</div>
+                </div>
+                <div class="card">
+                  <div class="small">টোটাল আর্নিং</div>
+                  <div class="balance" id="total-earn">BDT 0.00</div>
+                  <div class="note">রেফার, ভিডিও, টাইপিং থেকে আয় দেখবে।</div>
+                </div>
+              </div>
+
+              <div style="margin-top:12px" class="card">
+                <h3 style="margin:0 0 8px">আমাদের কাজসমূহ</h3>
+                <div class="grid-2">
+                  <div>
+                    <div class="muted">💰 রেফার ইনকাম</div>
+                    <div class="muted">🎥 ভিডিও দেখে আয়</div>
+                    <div class="muted">✉️ জিমেল মার্কেটিং</div>
+                  </div>
+                  <div>
+                    <div class="muted">💬 Telegram অ্যাকাউন্ট তৈরি</div>
+                    <div class="muted">📱 WhatsApp অ্যাকাউন্ট তৈরি</div>
+                    <div class="muted">⌨️ Typing Job</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card" style="margin-top:12px">
+                <h3 style="margin:0 0 8px">লাইভ ডিপোজিট (সাম্প্রতিক)</h3>
+                <div class="deposit-list" id="live-deposits">
+                  <!-- deposits here -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Earn Page -->
+            <div class="page" id="earn" style="display:none">
+              <div class="card">
+                <h3>ডিপোজিট বোনাস প্যাক</h3>
+                <p class="small">নিচের যে কোনো ডিপোজিট করলে আপনি স্থায়ীভাবে BDT 500 পাবেন (একবারি বোনাস)।</p>
+                <div style="margin-top:12px" class="grid-2" id="deposit-cards">
+                  <!-- dynamic -->
+                </div>
+                <div class="note">উদাহরণ: 100 টাকা ডিপোজিট করলে ক্লেইমে ৫০০ টাকা যোগ হবে।</div>
+              </div>
+
+              <div class="card" style="margin-top:12px">
+                <h3>অটো ও রিকমেন্ডেড</h3>
+                <p class="small">আজকের কাজগুলো: ভিডিও দেখা (BDT 0.02 প্রতি ভিডিও), টাইপিং কাজ, রেফার।</p>
+                <div style="margin-top:8px">
+                  <button class="btn btn-primary" id="watch-video">ভিডিও দেখে আয় করো</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deposit page -->
+            <div class="page" id="deposit" style="display:none">
+              <div class="card">
+                <h3>ডিপোজিট করুন</h3>
+                <p class="small">নিম্নে প্যাক থেকে নির্বাচন করে পেমেন্ট করুন।</p>
+                <div id="deposit-list" style="margin-top:10px"></div>
+              </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="page" id="profile" style="display:none">
+              <div class="card">
+                <h3>প্রোফাইল</h3>
+                <div style="display:flex;gap:12px;align-items:center">
+                  <div style="width:64px;height:64px;border-radius:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white;font-weight:800">U</div>
+                  <div>
+                    <div id="profile-name" style="font-weight:700">Guest</div>
+                    <div class="muted" id="profile-username">—</div>
+                  </div>
+                </div>
+                <div style="margin-top:12px" class="grid-2">
+                  <div class="small">Account Balance</div>
+                  <div id="pf-balance" style="font-weight:700">BDT 0.00</div>
+                  <div class="small">Total Deposited</div>
+                  <div id="pf-deposited" style="font-weight:700">BDT 0.00</div>
+                </div>
+              </div>
+
+              <div class="card" style="margin-top:12px">
+                <h4 style="margin:0 0 8px">Claim History</h4>
+                <div id="claim-history" class="deposit-list"></div>
+              </div>
+
+              <div class="card" style="margin-top:12px">
+                <h4 style="margin:0 0 8px">Account Settings</h4>
+                <div class="small">Username / Mobile / Change Password</div>
+                <div style="margin-top:8px" id="account-actions"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside>
+        <div class="card">
+          <div class="small">অ্যাকাউন্ট স্টেটাস</div>
+          <div style="margin-top:8px" id="auth-area">
+            <!-- login/register -->
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="small">ডিপোজিট দ্রুত নির্বাচন</div>
+          <div style="margin-top:10px" id="quick-deposits"></div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="small">মোবাইল নম্বর</div>
+          <div style="font-weight:700;margin-top:6px">+8801XXXXXXXXX</div>
+          <div class="note">পেমেন্ট হলে bKash/Nagad দিয়ে "I Have Paid" ক্লিক করে Claim করতে হবে।</div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>© {year} Online BD — তৈরি হয়েছে তোমার জন্য</footer>
+  </div>
+
+  <!-- modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <div id="modal-content"></div>
+      <div style="margin-top:12px" id="modal-actions" class="center"></div>
+    </div>
+  </div>
+
+<script>
+(function(){
+  const YEAR = new Date().getFullYear();
+  document.body.querySelector('footer').innerHTML = `© ${YEAR} Online BD — তৈরি হয়েছে তোমার জন্য`;
+
+  // --- App data & helpers ---
+  const PACKS = [100,200,300,400,500,600,700,800,900,1000];
+  const BONUS = 500;
+  const BKASH = "+88017XXXXXXXX";
+  const NAGAD = "+88018YYYYYYYY";
+  const STORAGE_KEY = "online_bd_users_v1";
+  const SESSION_KEY = "online_bd_session_v1";
+
+  // utility
+  function qs(sel, el=document){ return el.querySelector(sel); }
+  function qsa(sel, el=document){ return Array.from(el.querySelectorAll(sel)); }
+  function fmtBDT(x){ return "BDT " + parseFloat(x||0).toFixed(2); }
+  function now(){ return new Date().toISOString(); }
+
+  // --- Render deposit cards ---
+  function renderDepositCards(){
+    const container = qs('#deposit-cards');
+    container.innerHTML = '';
+    PACKS.forEach(v=>{
+      const div = document.createElement('div');
+      div.className = 'card deposit-item';
+      div.innerHTML = `<div><strong>Deposit ${v} ৳</strong><div class="muted">Get ${BONUS} ৳</div></div>
+      <div><button class="btn btn-primary" data-deposit="${v}">Pay</button></div>`;
+      container.appendChild(div);
+    });
+    // event
+    qsa('[data-deposit]').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const amount = parseInt(e.currentTarget.getAttribute('data-deposit'));
+        openPayModal(amount);
+      });
+    });
+  }
+
+  // quick deposits on aside
+  function renderQuickDeposits(){
+    const container = qs('#quick-deposits');
+    container.innerHTML = '';
+    PACKS.slice(0,5).forEach(v=>{
+      const btn = document.createElement('button');
+      btn.className = 'btn btn-primary';
+      btn.style.marginBottom = '6px';
+      btn.style.width = '100%';
+      btn.textContent = `${v} ৳ — Get ${BONUS}`;
+      btn.onclick = ()=> openPayModal(v);
+      container.appendChild(btn);
+    });
+  }
+
+  // modal
+  const modal = qs('#modal');
+  function openModal(contentHtml, actionsHtml){
+    qs('#modal-content').innerHTML = contentHtml;
+    qs('#modal-actions').innerHTML = actionsHtml || '';
+    modal.classList.add('show');
+  }
+  function closeModal(){ modal.classList.remove('show'); }
+
+  // payment modal
+  function openPayModal(amount){
+    const content = `<h3 style="margin:0 0 8px">Pay ${amount} ৳ and Get ${BONUS} ৳</h3>
+      <div class="small muted">Send money to one of the following:</div>
+      <div style="margin-top:8px">
+        <div class="row" style="justify-content:space-between">
+          <div><div class="muted">bKash</div><div style="font-weight:700">${BKASH}</div></div>
+          <div><div class="muted">Nagad</div><div style="font-weight:700">${NAGAD}</div></div>
+        </div>
+      </div>
+      <div class="note">টাকা পাঠানোর পর "I Have Paid" চাপুন — আমাদের ভেরিফিকেশন ম্যানুয়ালি হলে ক্লেইম হবে (ডেমো ভার্সন)।</div>`;
+    const actions = `<button class="btn" onclick="closeModal()">Cancel</button>
+      <button class="claim-btn" id="i-paid">I Have Paid</button>`;
+    openModal(content, actions);
+
+    // attach claim handler
+    document.getElementById('i-paid').onclick = ()=>{
+      // create pending deposit record for logged-in user
+      const session = getSession();
+      if(!session){ alert('প্রথমে লগইন করুন।'); closeModal(); return; }
+      const users = loadUsers();
+      const user = users[session.user];
+      if(!user){ alert('ইউজার নাই, পুনরায় লগইন করুন।'); closeModal(); return; }
+      // create deposit record
+      const deposit = { id: 'd_'+Date.now(), amount: amount, bonus: BONUS, paidTo: BKASH, method:'bKash/Nagad', time: now(), status: 'claimed' };
+      user.deposits = user.deposits || [];
+      user.deposits.unshift(deposit);
+      user.balance = (user.balance||0) + BONUS;
+      user.totalDeposited = (user.totalDeposited||0) + amount;
+      saveUsers(users);
+      closeModal();
+      alert('আপনার পেমেন্ট রেকর্ড যুক্ত হয়েছে এবং BDT '+BONUS+' আপনার ব্যালেন্সে যোগ করা হয়েছে (ডেমো)।');
+      refreshUI();
+    };
+  }
+
+  // watch video (demo)
+  function watchVideo(){
+    const session = getSession();
+    if(!session){ alert('প্রথমে লগইন করুন।'); return; }
+    const users = loadUsers(); const user = users[session.user];
+    user.balance = (user.balance||0) + 0.02;
+    user.totalEarnings = (user.totalEarnings||0) + 0.02;
+    user.activities = user.activities || [];
+    user.activities.unshift({type:'video',amount:0.02,time: now()});
+    saveUsers(users);
+    alert('ভিডিও দেখা সম্পন্ন — আপনি BDT 0.02 পেয়েছেন। (ডেমো)');
+    refreshUI();
+  }
+
+  // --- Storage: users & session ---
+  function loadUsers(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  function saveUsers(u){ localStorage.setItem(STORAGE_KEY, JSON.stringify(u)); }
+  function setSession(username){ localStorage.setItem(SESSION_KEY, username); }
+  function clearSession(){ localStorage.removeItem(SESSION_KEY); }
+  function getSession(){ return localStorage.getItem(SESSION_KEY); }
+
+  // register & login UI
+  function renderAuthArea(){
+    const container = qs('#auth-area');
+    const sessionUser = getSession();
+    if(sessionUser){
+      const users = loadUsers();
+      const user = users[sessionUser];
+      container.innerHTML = `<div class="small">Logged in as</div>
+        <div style="font-weight:700">${user.displayName || user.username || user.mobile}</div>
+        <div style="margin-top:8px">
+          <button class="btn" id="logout-btn">Logout</button>
+          <button class="btn btn-primary" id="to-profile">Profile</button>
+        </div>`;
+      qs('#logout-btn').onclick = ()=>{ if(confirm('Logout?')){ clearSession(); refreshUI(); } };
+      qs('#to-profile').onclick = ()=> showPage('profile');
+      return;
+    }
+
+    container.innerHTML = `<div id="auth-forms">
+      <div style="margin-bottom:8px"><button class="btn btn-primary" id="show-login">Login</button> <button class="btn" id="show-register">Register</button></div>
+      <div id="form-area"></div>
+    </div>`;
+    qs('#show-login').onclick = ()=> renderLoginForm();
+    qs('#show-register').onclick = ()=> renderRegisterForm();
+    renderLoginForm();
+  }
+
+  function renderLoginForm(){
+    qs('#form-area').innerHTML = `<div class="form-group"><label>Username or Mobile</label><input id="li-identity" placeholder="username অথবা mobile"/></div>
+      <div class="form-group"><label>Password</label><input id="li-pass" type="password" placeholder="Password"/></div>
+      <div><button class="btn btn-primary" id="do-login">Login</button></div>`;
+    qs('#do-login').onclick = doLogin;
+  }
+
+  function renderRegisterForm(){
+    qs('#form-area').innerHTML = `<div class="form-group"><label>Display Name</label><input id="reg-name" placeholder="আপনার নাম"/></div>
+      <div class="form-group"><label>Username</label><input id="reg-username" placeholder="একটি username"/></div>
+      <div class="form-group"><label>Mobile</label><input id="reg-mobile" placeholder="01XXXXXXXXX"/></div>
+      <div class="form-group"><label>Password</label><input id="reg-pass" type="password" placeholder="Password"/></div>
+      <div><button class="btn btn-primary" id="do-register">Create Account</button></div>`;
+    qs('#do-register').onclick = doRegister;
+  }
+
+  function doRegister(){
+    const name = qs('#reg-name').value.trim();
+    const username = qs('#reg-username').value.trim();
+    const mobile = qs('#reg-mobile').value.trim();
+    const pass = qs('#reg-pass').value;
+    if(!username || !pass || (!mobile && !name)){ alert('Username, Mobile and Password দিন।'); return; }
+    const users = loadUsers();
+    if(users[username]){ alert('এই username আগে থেকেই আছে — অন্যটি ব্যবহার করুন।'); return; }
+    // create user
+    users[username] = { username: username, mobile: mobile, password: pass, displayName: name||username, balance:0, totalEarnings:0, totalDeposited:0, deposits:[], activities:[] };
+    saveUsers(users);
+    setSession(username);
+    alert('অ্যাকাউন্ট তৈরি হয়েছে এবং লগইন হয়েছে।');
+    refreshUI();
+  }
+
+  function doLogin(){
+    const id = qs('#li-identity').value.trim();
+    const pass = qs('#li-pass').value;
+    const users = loadUsers();
+    // try by username
+    if(users[id] && users[id].password === pass){
+      setSession(id); alert('Welcome back, '+(users[id].displayName||id)); refreshUI(); return;
+    }
+    // try find by mobile
+    const found = Object.keys(users).find(k=> users[k].mobile === id && users[k].password === pass);
+    if(found){ setSession(found); alert('Welcome back, '+(users[found].displayName||found)); refreshUI(); return; }
+    alert('Invalid credentials or user not found.');
+  }
+
+  // render deposit list on deposit page
+  function renderDepositList(){
+    const cont = qs('#deposit-list');
+    cont.innerHTML = '';
+    PACKS.forEach(v=>{
+      const el = document.createElement('div');
+      el.className = 'deposit-item';
+      el.innerHTML = `<div><strong>${v} ৳</strong><div class="muted">পে করে Claim করে BDT ${BONUS} নিন</div></div>
+      <div><button class="btn btn-primary" data-deposit="${v}">Pay</button></div>`;
+      cont.appendChild(el);
+    });
+    qsa('[data-deposit]').forEach(b=>{
+      b.addEventListener('click', e=> openPayModal(parseInt(e.currentTarget.getAttribute('data-deposit'))));
+    });
+  }
+
+  // refresh UI
+  function refreshUI(){
+    renderAuthArea();
+    renderDepositCards();
+    renderQuickDeposits();
+    renderDepositList();
+    renderPages();
+    // update user stats
+    const sessionUser = getSession();
+    const live = qs('#live-deposits');
+    const claimHistory = qs('#claim-history');
+    live.innerHTML = '';
+    claimHistory.innerHTML = '';
+    let totalEarn=0;
+    if(sessionUser){
+      const users = loadUsers(); const user = users[sessionUser];
+      qs('#current-balance').textContent = fmtBDT(user.balance||0);
+      qs('#total-earn').textContent = fmtBDT(user.totalEarnings||0);
+      qs('#profile-name').textContent = user.displayName || user.username;
+      qs('#profile-username').textContent = user.mobile || ('@'+user.username);
+      qs('#pf-balance').textContent = fmtBDT(user.balance||0);
+      qs('#pf-deposited').textContent = fmtBDT(user.totalDeposited||0);
+      totalEarn = user.totalEarnings||0;
+      (user.deposits||[]).slice(0,10).forEach(d=>{
+        const el = document.createElement('div'); el.className='deposit-item';
+        el.innerHTML = `<div><div style="font-weight:700">${d.amount} ৳ → +${d.bonus} ৳</div><div class="muted">${d.time}</div></div><div><div class="small">${d.status}</div></div>`;
+        live.appendChild(el);
+      });
+      (user.deposits||[]).forEach(d=>{
+        const el = document.createElement('div'); el.className='deposit-item';
+        el.innerHTML = `<div><div style="font-weight:700">${d.amount} ৳ → +${d.bonus} ৳</div><div class="muted">${d.time}</div></div><div><div class="small">${d.status}</div></div>`;
+        claimHistory.appendChild(el);
+      });
+    } else {
+      qs('#current-balance').textContent = fmtBDT(0);
+      qs('#total-earn').textContent = fmtBDT(0);
+      qs('#profile-name').textContent = 'Guest';
+      qs('#profile-username').textContent = '—';
+      qs('#pf-balance').textContent = fmtBDT(0);
+      qs('#pf-deposited').textContent = fmtBDT(0);
+      // show some demo live deposits
+      const demo = [{amount:100,bonus:500,time:now(),status:'claimed'},{amount:200,bonus:500,time:now(),status:'claimed'}];
+      demo.forEach(d=>{ const el=document.createElement('div'); el.className='deposit-item'; el.innerHTML=`<div><div style="font-weight:700">${d.amount} ৳ → +${d.bonus} ৳</div><div class="muted">${d.time}</div></div><div><div class="small">${d.status}</div></div>`; live.appendChild(el); });
+    }
+  }
+
+  function renderPages(){
+    const pages = qsa('.page');
+    pages.forEach(p=> p.style.display = 'none');
+    const active = qs('.nav .active');
+    const page = active ? active.getAttribute('data-page') : 'dashboard';
+    qs('#'+page).style.display = 'block';
+  }
+
+  // nav handlers
+  qsa('.nav button').forEach(b=>{
+    b.addEventListener('click', e=>{
+      qsa('.nav button').forEach(x=>x.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      renderPages();
+    });
+  });
+
+  // top nav bottom aside actions
+  // quick: watch video
+  qs('#watch-video').addEventListener('click', ()=> watchVideo());
+
+  // initial render
+  renderDepositCards();
+  renderQuickDeposits();
+  renderDepositList();
+  renderAuthArea();
+  refreshUI();
+
+  // expose close modal to window for inline buttons
+  window.closeModal = closeModal;
+})();
+</script>
+</body>
+</html>
